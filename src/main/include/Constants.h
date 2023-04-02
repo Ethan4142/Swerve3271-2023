@@ -19,3 +19,38 @@ namespace OperatorConstants {
 constexpr int kDriverControllerPort = 0;
 
 }  // namespace OperatorConstants
+
+namespace swerveConstants {
+struct ids{
+ const int lfDrive = 1;
+ const int lbDrive = 2;
+ const int rfDrive = 3;
+ const int rbDrive = 4;
+
+ const int lfSteer = 5;
+ const int lbSteer = 6;
+ const int rfSteer = 7;
+ const int rbSteer = 8;
+ 
+ const int lfEnc = 9;
+ const int lbEnc = 10;
+ const int rfEnc = 11;
+ const int rbEnc = 12;
+
+};
+
+enum class turnUnit {degrees , radians};
+constexpr double kDegreesRatio = 0;
+constexpr double kRadiansRatio = 0;
+
+constexpr double kMetersRatio = 0;
+
+constexpr int midFrnt = 90;
+constexpr int midBack = 270;
+constexpr int midRight = 0;
+constexpr int midLeft = 180;
+
+constexpr int df = 45; //Degrees of freedom (is only perfect because the Gyro will not be perfect)
+
+
+}
