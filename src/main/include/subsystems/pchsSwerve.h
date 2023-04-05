@@ -16,13 +16,13 @@ class Swerve : frc2::SubsystemBase{
  public: Swerve(); 
  //Swerve Drive Constructor using the Swerve Drive IDS for each Module
  public:
- 
- void drive(double pwr);
 
- void setX();
+ //Tele-Operated Commands 
+ frc2::CommandPtr setX(double set);
 
- void setY();
+ void setY(double set);
  
+ void setTheta(double set);
     
 
  private:
@@ -37,9 +37,9 @@ class Swerve : frc2::SubsystemBase{
  /*************Position Tracking For Swerve Drive***********************/
  public:
 
-  double getHeadingX(); //Gets the Heading for positive X movement ( + 90 degrees)
+  double getHeadingX(); //Gets the Heading for positive X movement ( + 0 degrees)
 
-  double getHeadingY(); //Gets the Heading for positive Y movement ( + 0 degrees)
+  double getHeadingY(); //Gets the Heading for positive Y movement ( + 90 degrees)
 
   direction getX(); //Gets the direction the chassis would be going in the positive x direction
 

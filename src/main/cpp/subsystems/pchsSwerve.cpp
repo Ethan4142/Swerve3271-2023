@@ -12,19 +12,12 @@ Swerve::Swerve()
  IMU{frc::I2C::Port::kOnboard}
 {}
 
-void Swerve::drive(double pwr){
- moduleLF.setDrive(pwr);
- moduleLB.setDrive(pwr);
- moduleRF.setDrive(pwr);
- moduleRB.setDrive(pwr);
-}
-
 double Swerve::getHeadingX(){ 
- return(90 + IMU.GetYaw());
+ return(IMU.GetYaw());
 }
 
 double Swerve::getHeadingY(){
- return(IMU.GetYaw());
+ return(90 + IMU.GetYaw());
 }
 
 Swerve::direction Swerve::getX(){
