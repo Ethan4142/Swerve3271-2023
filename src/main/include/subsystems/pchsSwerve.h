@@ -2,7 +2,11 @@
 
 #include "SwerveModule.h"
 
+#define  swerveModules 4
+
 #include <frc/I2C.h>
+#include <frc/kinematics/SwerveDriveKinematics.h>
+#include <frc/kinematics/SwerveDriveOdometry.h>
 
 #include <AHRS.h>
 
@@ -18,12 +22,9 @@ class Swerve : frc2::SubsystemBase{
  public:
 
  //Tele-Operated Commands 
- frc2::CommandPtr setX(double set);
+ frc2::CommandPtr teleOp(double x, double y, double theta);
 
- void setY(double set);
- 
- void setTheta(double set);
-    
+ frc2::CommandPtr test()
 
  private:
  //Swerve Module contructors for the Drive

@@ -7,7 +7,7 @@ SwerveMod::SwerveMod(int drivePort,int steerPort,int encPort) //Constructor for 
  driveM{drivePort}, //Driving Motor port setting
  steerM{steerPort, rev::CANSparkMaxLowLevel::MotorType::kBrushless}, //Steering Motor port setting
  steerEnc{encPort} //Steering Encoder port Setting
- {}
+{}
 
 double SwerveMod::getSteer(swerveConstants::turnUnit unit){ 
 //Function to get the Steering angle of the Swerve Module in radians or degrees
@@ -29,7 +29,7 @@ double SwerveMod::getCloseAng(int angI, int angF){ //Gets the closest angle to t
 }
 
 double SwerveMod::getDrive(){ //Funtion to get the Driving Motors encoder ticks
- return((driveM.GetSelectedSensorPosition()) * swerveConstants::kMetersRatio); 
+ return((driveM.GetSelectedSensorVelocity())); 
  //Multiplies the raw ticks of the Driving motor by a constant to get the Meters Driven
 }
 
@@ -37,23 +37,41 @@ void SwerveMod::setSteer(double angle){ //sets the steering angle of the Swerve 
  double desiredAng; //Creates the varible for Desired Angle 
  double currentAng = getSteer(swerveConstants::turnUnit::degrees);
  //Gets the Current angle of the Steering encoder in degrees
- double lCloseAng = (getCloseAng(currentAng, angle));
+ double lCloseAng = (currentAng, angle);
  //Gets the closest angle based on the current angle and the desired angle on the Left side
- double rCloseAng = (getCloseAng(currentAng, angle + 180.0));
+ double rCloseAng = (currentAng,(angle + 180.0));
  //Gets the closest angle based on the current angle anf the desired angle on the Right side
  if(fabs(lCloseAng) <= fabs(rCloseAng)){ //If the angle is closer to the left side of the Swerve module
-  desiredAng = lCloseAng; //set the desired angle to the left side angle
-  steerM.Set(0.4); //set the Steering motor of the Swerve module to turn left
+  desiredAng = lCloseAng; //set the desired angle to the left side angle 
  }else if(fabs(rCloseAng) <= fabs(lCloseAng)){ //If the angle is closer to the right side of the Swerve Module 
   desiredAng = rCloseAng; //set the desired angle to the right side angle
-  steerM.Set(-0.4); //set the Steering motor of the Swerve module to turn right
- }if(fabs(desiredAng - currentAng) <= 0.5){ //Checks of the Swerve Module's Steering angle is at the Desired Angle
-  steerM.Set(0); //Stops the Swerve Module Steering Motor by setting Voltage power to 0
-  steerM.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);  //Sets the Swerve Module Steering Motor to Coast
+ }
+ if(SteerPID.AtSetpoint()){
+   steerM.StopMotor();
+ }
+ else{
+   steerM.Set(SteerPID.Calculate(currentAng,desiredAng));
  }
 }
 
 void SwerveMod::setDrive(double pwr){ //Set the Driving Motor to a power
    driveM.Set(ctre::phoenix::motorcontrol::TalonFXControlMode::PercentOutput, pwr);
    //Setting Driving Motor to a power percentage based within (-1.0 to 1.0)
+}
+
+frc::SwerveModuleState SwerveMod::getState(){ //Useless peice of shit (followed from sum java command)!
+ return frc::SwerveModuleState{units::velocity::meters_per_second_t{getDrive()},units::degree_t{getSteer(swerveConstants::turnUnit::degrees)}};
+}
+
+void SwerveMod::setState(frc::SwerveModuleState state){ //Moving the Swerve Drive Modules (From Valor 6800 <kiss kiss>)
+
+   frc::Rotation2d curAng(units::degree_t{getSteer(swerveConstants::turnUnit::degrees)});
+   frc::SwerveModuleState optimized = frc::SwerveModuleState::Optimize(state,curAng);
+   
+   frc::Rotation2d desiredAng = optimized.angle;
+   double ang = desiredAng.Degrees().to<double>();
+
+   //Setting the Motors to move
+   setSteer(ang);
+   setDrive((state.speed.to<double>()) * swerveConstants::l1Ratio);
 }

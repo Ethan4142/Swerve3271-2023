@@ -1,5 +1,7 @@
 #include "subsystems/pchsSwerve.h"
 
+#include "cmath"
+
 using namespace swerveConstants;
 ids swerveIDs; //Creating struct of the Swerve Module ID's
 
@@ -46,4 +48,16 @@ Swerve::direction Swerve::getY(){
     y = Swerve::direction::bck;
  }
  return(y);
+}
+
+frc2::CommandPtr teleOp(double x, double y, double theta){
+ double ang1 = acos(x) * kDegreesRatio;
+ double ang2 = asin(y) * kDegreesRatio;
+
+ 
+
+ double turnSet = theta;
+
+
+
 }
