@@ -14,6 +14,14 @@ Swerve::Swerve()
  IMU{frc::I2C::Port::kOnboard}
 {}
 
+void Swerve::innit(){
+ IMU.Calibrate();
+ 
+ pchsSwerveKinematics = new frc::SwerveDriveKinematics<swerveCount>(swerveIDs.leftFrnt,swerveIDs.leftBack,swerveIDs.rightFrnt,swerveIDs.rightBack);
+}
+
+
+   
 double Swerve::getHeadingX(){ 
  return(IMU.GetYaw());
 }
@@ -50,14 +58,3 @@ Swerve::direction Swerve::getY(){
  return(y);
 }
 
-frc2::CommandPtr teleOp(double x, double y, double theta){
- double ang1 = acos(x) * kDegreesRatio;
- double ang2 = asin(y) * kDegreesRatio;
-
- 
-
- double turnSet = theta;
-
-
-
-}

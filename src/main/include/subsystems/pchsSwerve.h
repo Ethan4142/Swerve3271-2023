@@ -2,14 +2,12 @@
 
 #include "SwerveModule.h"
 
-#define  swerveModules 4
-
 #include <frc/I2C.h>
+#include <frc2/command/Commands.h>
 #include <frc/kinematics/SwerveDriveKinematics.h>
 #include <frc/kinematics/SwerveDriveOdometry.h>
 
 #include <AHRS.h>
-
 
 class Swerve : frc2::SubsystemBase{
  enum class direction{fwd,lft,bck,rgt};
@@ -20,11 +18,17 @@ class Swerve : frc2::SubsystemBase{
  public: Swerve(); 
  //Swerve Drive Constructor using the Swerve Drive IDS for each Module
  public:
+ 
+ frc::SwerveDriveKinematics<swerveConstants::swerveCount>* pchsSwerveKinematics; //Kinematics Object for the Swerve drive
 
  //Tele-Operated Commands 
  frc2::CommandPtr teleOp(double x, double y, double theta);
 
- frc2::CommandPtr test()
+ frc2::CommandPtr test();
+
+ void innit();
+
+ 
 
  private:
  //Swerve Module contructors for the Drive
@@ -47,8 +51,4 @@ class Swerve : frc2::SubsystemBase{
   direction getY(); //Gets the direction the chassis would be going in the positive y direction
 
   
-
-  private:
-  //Swerve Positions
-  direction curDirec;
 };

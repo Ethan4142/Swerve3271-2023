@@ -17,5 +17,18 @@
   "C_Cpp.default.configurationProvider": "vscode-wpilib",
   "files.associations": {
     "*.tcc": "cpp"
-  }
+  },
+  "audioCues.lineHasError": "off",
+  "audioCues.lineHasBreakpoint": "off",
+  "audioCues.diffLineDeleted": "off",
+  "audioCues.diffLineInserted": "off",
+  "audioCues.lineHasFoldedArea": "off",
+  "audioCues.lineHasInlineSuggestion": "off",
+  "audioCues.noInlayHints": "off",
+  "audioCues.notebookCellCompleted": "off",
+  "audioCues.notebookCellFailed": "off",
+  "audioCues.onDebugBreak": "off",
+  "audioCues.taskCompleted": "off",
+  "audioCues.taskFailed": "off",
+  "audioCues.terminalQuickFix": "off"
 }

@@ -29,6 +29,8 @@ class SwerveMod : frc2::SubsystemBase{
 
   SwerveMod(int drivePort, int steerPort, int encPort); //Swerve Module constructor
 
+  void stop(ctre::phoenix::motorcontrol::NeutralMode driveMode, rev::ControlType steerMode); //Stops the Motors on the Swerve Modules and sets the stopping modes
+
   frc::SwerveModuleState getState(); //Swerve Module State based through WPI LIB kinematics (I could not do it) :(
 
   void setState(frc::SwerveModuleState state);

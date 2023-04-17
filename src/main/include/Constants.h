@@ -6,6 +6,9 @@
 
 #include <cmath>
 
+#include <frc/geometry/Translation2d.h>
+
+
 /**
  * The Constants header provides a convenient place for teams to hold robot-wide
  * numerical or boolean constants.  This should not be used for any other
@@ -18,11 +21,13 @@
 
 namespace OperatorConstants {
 
+constexpr double kDriverDeadband = 0.02;
 constexpr int kDriverControllerPort = 0;
 
 }  // namespace OperatorConstants
 
 namespace swerveConstants {
+const swerveCount = 4;
 struct ids{
  const int lfDrive = 1;
  const int lbDrive = 2;
@@ -39,6 +44,12 @@ struct ids{
  const int rfEnc = 11;
  const int rbEnc = 12;
 
+ //Module Offsets from the center of the robot- In Translation2D
+ //Set Up for the Front of the Robot to be Positive X
+ const frc::Translation2d leftFrnt{units::meter_t{1},units::meter_t{1}};
+ const frc::Translation2d leftBack{units::meter_t{-1},units::meter_t{1}};
+ const frc::Translation2d rightFrnt{units::meter_t{1},units::meter_t{-1}};
+ const frc::Translation2d rightBack{units::meter_t{-1},units::meter_t{-1}};
 };
 
 enum class turnUnit {degrees , radians};

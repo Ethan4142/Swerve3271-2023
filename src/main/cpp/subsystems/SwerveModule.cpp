@@ -9,6 +9,13 @@ SwerveMod::SwerveMod(int drivePort,int steerPort,int encPort) //Constructor for 
  steerEnc{encPort} //Steering Encoder port Setting
 {}
 
+void SwerveMod::stop(ctre::phoenix::motorcontrol::NeutralMode driveMode, rev::CANSparkMax::IdleMode steerMode){
+ driveM.set(ctre::phoenix::motorcontrol::TalonFXControlMode::PercentOutput, 0);
+ steerM.set(0);
+ driveM.SetNeutralMode(driveMode);
+ steerM.SetIdleMode(steerMode);
+}
+
 double SwerveMod::getSteer(swerveConstants::turnUnit unit){ 
 //Function to get the Steering angle of the Swerve Module in radians or degrees
  double steerAngle = 0; //create a variable for the steering angle          
@@ -59,13 +66,16 @@ void SwerveMod::setDrive(double pwr){ //Set the Driving Motor to a power
    //Setting Driving Motor to a power percentage based within (-1.0 to 1.0)
 }
 
-frc::SwerveModuleState SwerveMod::getState(){ //Useless peice of shit (followed from sum java command)!
+frc::SwerveModuleState SwerveMod::getState(){ //Function to get the current state of the Swerve module 
  return frc::SwerveModuleState{units::velocity::meters_per_second_t{getDrive()},units::degree_t{getSteer(swerveConstants::turnUnit::degrees)}};
 }
 
 void SwerveMod::setState(frc::SwerveModuleState state){ //Moving the Swerve Drive Modules (From Valor 6800 <kiss kiss>)
+ if(state.speed < units::meters_per_second_t{OperatorConstants::kDriverDeadband}){
+   
+ }
 
-   frc::Rotation2d curAng(units::degree_t{getSteer(swerveConstants::turnUnit::degrees)});
+   frc::Rotation2d curAng(units::degree_t{steerEnc.GetAbsolutePosition()});
    frc::SwerveModuleState optimized = frc::SwerveModuleState::Optimize(state,curAng);
    
    frc::Rotation2d desiredAng = optimized.angle;
