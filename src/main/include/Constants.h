@@ -27,7 +27,7 @@ constexpr int kDriverControllerPort = 0;
 }  // namespace OperatorConstants
 
 namespace swerveConstants {
-const swerveCount = 4;
+const int swerveCount = 4;
 struct ids{
  const int lfDrive = 1;
  const int lbDrive = 2;
@@ -43,6 +43,10 @@ struct ids{
  const int lbEnc = 10;
  const int rfEnc = 11;
  const int rbEnc = 12;
+
+ const int pidgeon = 13;
+ const std::string pidgeonversion = "2";
+ const std::string pidgeonname = "pidgeon";
 
  //Module Offsets from the center of the robot- In Translation2D
  //Set Up for the Front of the Robot to be Positive X

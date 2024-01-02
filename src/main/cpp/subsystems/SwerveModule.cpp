@@ -5,16 +5,18 @@
 SwerveMod::SwerveMod(int drivePort,int steerPort,int encPort) //Constructor for Swerve Module
  :
  driveM{drivePort}, //Driving Motor port setting
- steerM{steerPort, rev::CANSparkMaxLowLevel::MotorType::kBrushless}, //Steering Motor port setting
+ steerM{steerPort}, //Steering Motor port setting
  steerEnc{encPort} //Steering Encoder port Setting
 {}
 
-void SwerveMod::stop(ctre::phoenix::motorcontrol::NeutralMode driveMode, rev::CANSparkMax::IdleMode steerMode){
- driveM.set(ctre::phoenix::motorcontrol::TalonFXControlMode::PercentOutput, 0);
- steerM.set(0);
+//Get rid of the Spark MAX (1. No aplicable LIB, 2. It's all Falcons)
+void SwerveMod::stop(ctre::phoenix::motorcontrol::NeutralMode driveMode, ctre::phoenix::motorcontrol::NeutralMode steerMode){
+ driveM.Set(ctre::phoenix::motorcontrol::TalonFXControlMode::PercentOutput, 0);
+ steerM.Set(ctre::phoenix::motorcontrol::TalonFXControlMode::PercentOutput, 0);
  driveM.SetNeutralMode(driveMode);
- steerM.SetIdleMode(steerMode);
+ steerM.SetNeutralMode(steerMode);
 }
+
 
 double SwerveMod::getSteer(swerveConstants::turnUnit unit){ 
 //Function to get the Steering angle of the Swerve Module in radians or degrees

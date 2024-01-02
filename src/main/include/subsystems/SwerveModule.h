@@ -18,8 +18,6 @@
 #include <ctre/phoenix/motorcontrol/can/WPI_TalonFX.h>
 #include <ctre/phoenix/sensors/CANCoder.h>
 
-#include <rev/CANSparkMax.h>
-#include <rev/CANEncoder.h>
 
 
 class SwerveMod : frc2::SubsystemBase{
@@ -29,7 +27,7 @@ class SwerveMod : frc2::SubsystemBase{
 
   SwerveMod(int drivePort, int steerPort, int encPort); //Swerve Module constructor
 
-  void stop(ctre::phoenix::motorcontrol::NeutralMode driveMode, rev::ControlType steerMode); //Stops the Motors on the Swerve Modules and sets the stopping modes
+  void stop(ctre::phoenix::motorcontrol::NeutralMode driveMode, ctre::phoenix::motorcontrol::NeutralMode steerMode); //Stops the Motors on the Swerve Modules and sets the stopping modes
 
   frc::SwerveModuleState getState(); //Swerve Module State based through WPI LIB kinematics (I could not do it) :(
 
@@ -49,7 +47,8 @@ class SwerveMod : frc2::SubsystemBase{
   frc::PIDController SteerPID{swerveConstants::steerP,swerveConstants::steerI,swerveConstants::steerD};
   //Base Motor Initialization of Module Electronics
   ctre::phoenix::motorcontrol::can::WPI_TalonFX driveM; //Driving Motor
-  rev::CANSparkMax steerM; //Steering Motor
+  ctre::phoenix::motorcontrol::can::WPI_TalonFX steerM; //Steering Motor
+
   ctre::phoenix::sensors::CANCoder steerEnc; //Encoder to track the steering angle
   modSide side;// Side the Swerve module is relative to the base and robot
 

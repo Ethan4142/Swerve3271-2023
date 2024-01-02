@@ -2,12 +2,12 @@
 
 #include "SwerveModule.h"
 
-#include <frc/I2C.h>
+#include <ctre/phoenix/sensors/BasePigeon.h>
 #include <frc2/command/Commands.h>
 #include <frc/kinematics/SwerveDriveKinematics.h>
 #include <frc/kinematics/SwerveDriveOdometry.h>
 
-#include <AHRS.h>
+
 
 class Swerve : frc2::SubsystemBase{
  enum class direction{fwd,lft,bck,rgt};
@@ -37,8 +37,7 @@ class Swerve : frc2::SubsystemBase{
  SwerveMod moduleRF; //Right front Swerve Module
  SwerveMod moduleRB; //Right back Swerve Module
 
- AHRS IMU;//NavX 2 Micro Gyro
-
+ ctre::phoenix::sensors::BasePigeon IMU;
  /*************Position Tracking For Swerve Drive***********************/
  public:
 

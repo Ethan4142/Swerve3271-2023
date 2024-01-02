@@ -11,11 +11,10 @@ Swerve::Swerve()
  moduleLB{swerveIDs.lbDrive,swerveIDs.lbSteer,swerveIDs.lbEnc},
  moduleRF{swerveIDs.rfDrive,swerveIDs.rfSteer,swerveIDs.rfEnc},
  moduleRB{swerveIDs.rbDrive,swerveIDs.rbSteer,swerveIDs.rbEnc},
- IMU{frc::I2C::Port::kOnboard}
+ IMU{swerveIDs.pidgeon,swerveIDs.pidgeonversion, swerveIDs.pidgeonname}
 {}
 
 void Swerve::innit(){
- IMU.Calibrate();
  
  pchsSwerveKinematics = new frc::SwerveDriveKinematics<swerveCount>(swerveIDs.leftFrnt,swerveIDs.leftBack,swerveIDs.rightFrnt,swerveIDs.rightBack);
 }
