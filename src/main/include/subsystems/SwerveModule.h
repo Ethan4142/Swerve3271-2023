@@ -25,7 +25,13 @@ class SwerveMod : frc2::SubsystemBase{
 
   enum class modSide {lf, lb, rf, rb}; //Enumerator for the Sides of the robot chassis and Swerve Modules
 
-  SwerveMod(int drivePort, int steerPort, int encPort); //Swerve Module constructor
+  SwerveMod(
+       ctre::phoenix::motorcontrol::can::WPI_TalonFX &drive, //argument (pointers to the motors being used in the constants)
+       ctre::phoenix::motorcontrol::can::WPI_TalonFX &steer,
+       ctre::phoenix::sensors::CANCoder &enc,
+       frc::Translation2d &location
+       ); //Swerve Module constructor
+
 
   void stop(ctre::phoenix::motorcontrol::NeutralMode driveMode, ctre::phoenix::motorcontrol::NeutralMode steerMode); //Stops the Motors on the Swerve Modules and sets the stopping modes
 
@@ -46,15 +52,14 @@ class SwerveMod : frc2::SubsystemBase{
  private:
   frc::PIDController SteerPID{swerveConstants::steerP,swerveConstants::steerI,swerveConstants::steerD};
   //Base Motor Initialization of Module Electronics
-  ctre::phoenix::motorcontrol::can::WPI_TalonFX driveM; //Driving Motor
-  ctre::phoenix::motorcontrol::can::WPI_TalonFX steerM; //Steering Motor
+  ctre::phoenix::motorcontrol::can::WPI_TalonFX* driveM; //Driving Motor
+  ctre::phoenix::motorcontrol::can::WPI_TalonFX* steerM; //Steering Motor
+  ctre::phoenix::sensors::CANCoder* steerEnc; //Encoder to track the steering angle
 
-  ctre::phoenix::sensors::CANCoder steerEnc; //Encoder to track the steering angle
+
   modSide side;// Side the Swerve module is relative to the base and robot
 
   //Starting configuration of the swerve
-  double startSteer = 90; //starting config of the steering degree
-
- 
+  frc::Translation2d* configLocate;
 
 };
